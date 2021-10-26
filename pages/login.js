@@ -9,7 +9,7 @@ import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
-export default function Login() {
+function Login() {
 	const router = useRouter();
 	const { redirect } = router.query;
 	const { state, dispatch } = useContext(Store);
@@ -83,4 +83,4 @@ export default function Login() {
 	);
 }
 
-// export default dynamic(() => Promise.resolve(Login), { ssr: false });
+export default dynamic(() => Promise.resolve(Login), { ssr: false });
