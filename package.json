@@ -23,8 +23,10 @@
     "mongoose": "^6.0.11",
     "next": "11.1.2",
     "next-connect": "^0.11.0",
+    "notistack": "^2.0.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.17.5"
   },
   "devDependencies": {
     "eslint": "7.32.0",
