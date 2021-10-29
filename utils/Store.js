@@ -3,16 +3,15 @@ import { createContext, useReducer } from 'react';
 
 export const Store = createContext();
 const userInfo = Cookies.get('userInfo');
+const shippingAddress = Cookies.get('shippingAddress');
 
 const initialState = {
 	darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
 	cart: {
 		cartItems: Cookies.get('cartItems') ? JSON.parse(Cookies.get('cartItems')) : [],
-		shippingAddress: Cookies.get('shippingAddress')
-			? JSON.parse(Cookies.get('shippingAddress'))
-			: {},
+		shippingAddress: shippingAddress ? JSON.parse(shippingAddress) : {},
+		paymentMethod: Cookies.get('paymentMethod') ? Cookies.get('paymentMethod') : '',
 	},
-
 	userInfo: userInfo ? JSON.parse(userInfo) : null,
 };
 
@@ -38,7 +37,19 @@ function reducer(state, action) {
 			return { ...state, cart: { ...state.cart, cartItems } };
 		}
 		case 'SAVE_SHIPPING_ADDRESS': {
-			return { ...state, cart: { ...state.cart, shippingAddress: action.payload } };
+			return {
+				...state,
+				cart: {
+					...state.cart,
+					shippingAddress: {
+						...state.cart.shippingAddress,
+						shippingAddress: action.payload,
+					},
+				},
+			};
+		}
+		case 'SAVE_PAYMENT_METHOD': {
+			return { ...state, cart: { ...state.cart, paymentMethod: action.payload } };
 		}
 		case 'USER_LOGIN':
 			return { ...state, userInfo: action.payload };

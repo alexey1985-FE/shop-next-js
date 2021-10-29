@@ -2,14 +2,13 @@ import { Button, List, ListItem, TextField, Typography } from '@material-ui/core
 import React, { useContext, useEffect } from 'react';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
-import dynamic from 'next/dynamic';
 import { Store } from '../utils/Store';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
-import CheckoutWizard from '../components/checkoutWizard';
+import CheckoutWizard from '../components/CheckoutWizard';
 
-function Shipping() {
+export default function Shipping() {
 	const {
 		handleSubmit,
 		control,
@@ -24,7 +23,7 @@ function Shipping() {
 	} = state;
 
 	useEffect(() => {
-		if (!userInfo) {
+		if (!userInfo || !shippingAddress) {
 			router.push('/login?redirect=/shipping');
 		}
 		setValue('fullName', shippingAddress.fullName);
@@ -33,6 +32,12 @@ function Shipping() {
 		setValue('postalCode', shippingAddress.postalCode);
 		setValue('country', shippingAddress.country);
 	}, []);
+
+	// setValue('fullName', shippingAddress.fullName);
+	// setValue('address', shippingAddress.address);
+	// setValue('city', shippingAddress.city);
+	// setValue('postalCode', shippingAddress.postalCode);
+	// setValue('country', shippingAddress.country);
 
 	const classes = useStyles();
 
@@ -49,7 +54,9 @@ function Shipping() {
 			'shippingAddress',
 			JSON.stringify({ fullName, address, city, postalCode, country })
 		);
+
 		router.push('/payment');
+		console.log(Cookies.get('shippingAddress'));
 	};
 
 	return (
@@ -210,5 +217,3 @@ function Shipping() {
 		</Layout>
 	);
 }
-
-export default dynamic(() => Promise.resolve(Shipping), { ssr: false });
