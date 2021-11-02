@@ -18,5 +18,4 @@ function MyApp({ Component, pageProps }) {
 		</SnackbarProvider>
 	);
 }
-
 export default MyApp;

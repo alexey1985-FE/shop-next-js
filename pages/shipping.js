@@ -1,9 +1,9 @@
-import { Button, List, ListItem, TextField, Typography } from '@material-ui/core';
+import { List, ListItem, Typography, TextField, Button } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import Layout from '../components/Layout';
-import useStyles from '../utils/styles';
 import { Store } from '../utils/Store';
-import { useRouter } from 'next/router';
+import useStyles from '../utils/styles';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import CheckoutWizard from '../components/CheckoutWizard';
@@ -33,36 +33,23 @@ export default function Shipping() {
 		setValue('country', shippingAddress.country);
 	}, []);
 
-	// setValue('fullName', shippingAddress.fullName);
-	// setValue('address', shippingAddress.address);
-	// setValue('city', shippingAddress.city);
-	// setValue('postalCode', shippingAddress.postalCode);
-	// setValue('country', shippingAddress.country);
-
 	const classes = useStyles();
-
 	const submitHandler = ({ fullName, address, city, postalCode, country }) => {
 		dispatch({
 			type: 'SAVE_SHIPPING_ADDRESS',
-			payload: fullName,
-			address,
-			city,
-			postalCode,
-			country,
+			payload: { fullName, address, city, postalCode, country },
 		});
 		Cookies.set(
 			'shippingAddress',
 			JSON.stringify({ fullName, address, city, postalCode, country })
 		);
-
 		router.push('/payment');
-		console.log(Cookies.get('shippingAddress'));
 	};
 
 	return (
 		<Layout title="Shipping Address">
 			<CheckoutWizard activeStep={1} />
-			<form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
+			<form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
 				<Typography component="h1" variant="h1">
 					Shipping Address
 				</Typography>
@@ -208,7 +195,7 @@ export default function Shipping() {
 						></Controller>
 					</ListItem>
 					<ListItem>
-						<Button fullWidth type="submit" variant="contained" color="primary">
+						<Button variant="contained" type="submit" fullWidth color="primary">
 							Continue
 						</Button>
 					</ListItem>

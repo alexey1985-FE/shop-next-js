@@ -69,6 +69,7 @@ function Layout({ description, children, title }) {
 		dispatch({ type: 'USER_LOGOUT' });
 		Cookies.remove('userInfo');
 		Cookies.remove('cartItems');
+		Cookies.remove('shippingAddress');
 		router.push('/');
 	};
 
@@ -132,7 +133,6 @@ function Layout({ description, children, title }) {
 									<Link>Login</Link>
 								</NextLink>
 							)}
-							{/* {console.log(userInfo)} */}
 						</div>
 					</Toolbar>
 				</AppBar>

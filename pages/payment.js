@@ -32,7 +32,6 @@ export default function Payment() {
 			router.push('/shipping');
 		}
 		setPaymentMethod(Cookies.get('paymentMethod') || '');
-		// console.log(shippingAddress);
 	}, []);
 
 	const submitHandler = e => {
@@ -45,7 +44,6 @@ export default function Payment() {
 			JSON.stringify(Cookies.set('paymentMethod', paymentMethod));
 			router.push('/placeorder');
 		}
-		console.log(paymentMethod);
 	};
 
 	return (
